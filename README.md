@@ -5,13 +5,13 @@ This repository serves as a comprehensive guide and architectural reference for 
 ---
 
 ## 📋 Table of Contents
-1. [About SOLID Principles](#-about-solid-principles)
+1. [About SOLID Principles](#about-solid-principles)
 2. [Single Responsibility Principle (SRP)](#1-single-responsibility-principle-srp)
 3. [Open/Closed Principle (OCP)](#2-openclosed-principle-ocp)
 4. [Liskov Substitution Principle (LSP)](#3-liskov-substitution-principle-lsp)
 5. [Interface Segregation Principle (ISP)](#4-interface-segregation-principle-isp)
 6. [Dependency Inversion Principle (DIP)](#5-dependency-inversion-principle-dip)
-7. [Getting Started & Verification](#-getting-started--verification)
+7. [Getting Started & Verification](#getting-started--verification)
 
 ---
 
@@ -21,7 +21,7 @@ SOLID is an acronym for five object-oriented design principles intended to make 
 ---
 
 ## 1. Single Responsibility Principle (SRP)
-> **Definition:** A class should have one, and only one, reason to change.
+> **Definition:** A class should have one, and only one responsibility to perform task.
 
 ### ❌ Anti-Pattern (Violating SRP)
 ```java
@@ -73,7 +73,7 @@ public class UserService {
 ---
 
 ## 2. Open/Closed Principle (OCP)
-> **Definition:** Software entities should be open for extension, but closed for modification.
+> **Definition:** Software entities should be open for extension, but closed for modification. One should not be able to change core implementation but can inherit and create a wrapper around it or override with custom implementation. 
 
 ### ❌ Anti-Pattern (Violating OCP)
 ```java
@@ -122,7 +122,7 @@ public class PaymentProcessor {
 ---
 
 ## 3. Liskov Substitution Principle (LSP)
-> **Definition:** Subtypes must be substitutable for their base types without altering correctness.
+> **Definition:** Subtypes must be substitutable for their base types without altering correctness.  parent class reference can hold an instance of its child class.
 
 ### ❌ Anti-Pattern (Violating LSP)
 ```java
@@ -160,22 +160,20 @@ public class SmsNotification implements NotificationChannel {
 ---
 
 ## 4. Interface Segregation Principle (ISP)
-> **Definition:** Clients should not be forced to depend on interfaces they do not use.
+> **Definition:** Provide multiple specific interfaces rather than a few general-purpose ones. Clients should not be forced to depend on interfaces they do not use.
 
 ### ❌ Anti-Pattern (Violating ISP)
 ```java
 package com.example.service;
 
-public interface CloudStorage {
-    void uploadFile(byte[] data);
-    void setupCdnCaching(); // Cloud specific feature
+public interface ElectronicDevices {
+    int displaySize(); // Specific to device 
 }
 
-public class LocalDiskStorage implements CloudStorage {
-    public void uploadFile(byte[] data) { /* write to local directory */ }
-    public void setupCdnCaching() {
+public class Trimmer implements ElectronicDevices {
+    public int displaySize() {
         // Violation: Forced to implement useless stub methods
-        throw new UnsupportedOperationException("Local disk lacks CDN options");
+        throw new UnsupportedOperationException("Don't have display");
     }
 }
 ```
@@ -200,7 +198,7 @@ public class LocalDiskStorage implements FileUploader {
 ---
 
 ## 5. Dependency Inversion Principle (DIP)
-> **Definition:** Depend on abstractions, not on concretions. High-level modules should not depend on low-level modules.
+> **Definition:** Depend on abstractions, not on concretions. High-level modules should not depend on low-level modules. Basically, abstraction layer should be called rather than the class.
 
 ### ❌ Anti-Pattern (Violating DIP)
 ```java
@@ -237,50 +235,5 @@ public class AlertManager {
     public void triggerAlert(String text) {
         messageSender.send(text);
     }
-}
-```
-
----
-
-## 🛠️ Getting Started & Verification
-
-To verify architecture standards inside your Java project, integrate the following test configurations.
-
-### 1. Prerequisites
-* **Java 17+**
-* **Maven 3.8+**
-
-### 2. Automated Architecture Testing
-You can use **ArchUnit** to enforce these SOLID patterns in your compilation pipeline automatically. Add this snippet to your `pom.xml`:
-
-```xml
-<dependency>
-    <groupId>com.tngtech.archunit</groupId>
-    <artifactId>archunit-junit5</artifactId>
-    <version>1.3.0</version>
-    <scope>test</scope>
-</dependency>
-```
-
-Create an architecture validation class inside your test scope to enforce layering separation (DIP/SRP):
-
-```java
-import com.tngtech.archunit.junit.AnalyzeClasses;
-import com.tngtech.archunit.junit.ArchTest;
-import com.tngtech.archunit.lang.ArchRule;
-import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
-
-@AnalyzeClasses(packages = "com.example")
-public class ArchitectureTest {
-
-    @ArchTest
-    static final ArchRule layers_should_be_respected = layeredArchitecture()
-        .consideringAllDependencies()
-        .layer("Controller").definedBy("..controller..")
-        .layer("Service").definedBy("..service..")
-        .layer("Repository").definedBy("..repository..")
-        .whereLayer("Controller").mayNotBeAccessedByAnyLayer()
-        .whereLayer("Service").mayOnlyBeAccessedByLayers("Controller")
-        .whereLayer("Repository").mayOnlyBeAccessedByLayers("Service");
 }
 ```
