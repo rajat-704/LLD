@@ -18,6 +18,7 @@ Types of creational patterns -
 1. Singleton pattern: <br>
    A simple pattern to allow only one object creation of any class and a global access point for all the other classes.
 2. Factory pattern: <br>
+   A interface, to hide how objects of underlying classes are created. Based on input params decide which sub-class has to be used for instance creation.
 3. Builder pattern: <br>
 4. Abstract pattern: <br>
 5. Prototype pattern: <br>

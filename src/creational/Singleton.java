@@ -17,6 +17,18 @@ public class Singleton {
 }
 
 
+/*
+    Alternate using static inner class rather than static getInstance method
+    Ex - The JVM won't load the inner class into memory until it's referenced in the getInstance()
+         method, making it both lazy and thread-safe without needing explicit synchronization
+    private static class SingletonHelper {
+        private static final ThreadSafeSingleton INSTANCE = new ThreadSafeSingleton();
+    }
+
+    public static BillPughSingleton getInstance() {
+        return SingletonHelper.INSTANCE;
+    }
+*/
 class ThreadSafeSingleton {
     String startString;
     private static volatile ThreadSafeSingleton instance;
@@ -37,7 +49,7 @@ class ThreadSafeSingleton {
 }
 
 
-class Main {
+class MainFactory {
     public static void main(String[] args) {
 //        Singleton singleton = Singleton.getInstance("singleton");
 //        Singleton singleton1 = Singleton.getInstance("singleton1");
