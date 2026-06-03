@@ -17,9 +17,10 @@ Types of creational patterns -
 
 1. Singleton pattern: <br>
    A simple pattern to allow only one object creation of any class and a global access point for all the other classes.
-2. Factory pattern: <br>
-   A interface, to hide how objects of underlying classes are created. Based on input params decide which sub-class has to be used for instance creation.
-3. Builder pattern: <br>
+2. Builder pattern: <br>
    Builder pattern is a solution to telescopic constructor problem where multiple constructors has to be created for every combination of parameters.
-4. Abstract pattern: <br>
+3. Factory pattern: <br>
+   A interface, to hide how objects of underlying classes are created. Based on input params decide which sub-class has to be used for instance creation.
+4. Abstract pattern: Factory of Factories <br>
+   A pattern to build related or dependant objects without specifying concrete classes.
 5. Prototype pattern: <br>
