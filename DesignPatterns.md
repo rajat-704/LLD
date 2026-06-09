@@ -3,13 +3,13 @@
 Design patterns are tried and tested blueprints for software design problems. They are templates for creating object and classes.
 <br>
 
-There are 3 design patters - 
- 1. Creational : <br>
-To provide a pattern or way for object creation. 
- 2. Bhevioural : <br>
-T
- 3. Structural: <br>
-T
+There are 3 design patters -
+1. Creational : <br>
+   To provide a pattern or way for object creation.
+2. Structural : <br>
+   It focuses on structure of object and classes for efficient and maintainable code.
+3. Behavioural: <br>
+   T
 
 ## 1. Creational Design pattern
 
@@ -24,4 +24,12 @@ Types of creational patterns -
 4. Abstract pattern: Factory of Factories <br>
    A pattern to build related or dependant objects without specifying concrete classes.
 5. Prototype pattern: <br>
-   To create a object from existing object and update required values in clone. It can be useful when we are integrated with interface have no access of concrete class or creation of object is time consuming like documents objects.  
+   To create a object from existing object and update required values in clone. It can be useful when we are integrated with interface have no access of concrete class or creation of object is time consuming like documents objects.
+
+## 2. Structural Design pattern
+
+Types of structural patterns -
+
+1. Adapter pattern: Wrapper pattern<br>
+   To make existing class compatible with new interfaces without changing its core program.
+   
